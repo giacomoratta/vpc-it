@@ -1,0 +1,39 @@
+<?php global $VPC; ?>
+<script>
+var $=jQuery;
+$(document).ready(function()
+{
+
+	$("#GMap_BOX_id").vpc_gmap({
+		
+<?php if(strlen($GMap_Box_lat)>0 && strlen($GMap_Box_lng)>0) { ?>
+		lat:<?php echo $GMap_Box_lat; ?>,
+		lng:<?php echo $GMap_Box_lng; ?>,
+		zoom:17,
+		markers:[{lat:<?php echo $GMap_Box_lat; ?>,lng:<?php echo $GMap_Box_lng; ?>}],	
+<?php } else { ?>
+		lat:<?php echo $VPC->gmap_opz['lat']; ?>,
+		lng:<?php echo $VPC->gmap_opz['lng']; ?>,
+		zoom:<?php echo ($VPC->gmap_opz['zoom']-1); ?>,
+<?php } ?>
+
+		new_marker_fn:function(lat,lng)
+			{
+				$("#GMap_BOX_Lat").attr('value',lat);
+				$("#GMap_BOX_Lng").attr('value',lng);
+				$("#GMap_BOX_LatLng").attr('value',lat+","+lng);
+			}
+	});
+
+
+});
+</script>
+
+<div id="GMap_BOX_id" style="width:100%;height:400px;">Your browser doesn't support Google Maps or Javascript is turned off.</div>
+
+<div style="padding-top:10px;">
+	<div><b>Coordinate [Lat,Lng]</b></div>
+	<input type="text" id="GMap_BOX_LatLng" name="GMap_BOX_LatLng" value="<?php echo $GMap_Box_latlng; ?>" style="width:260px;" readonly="readonly" />
+	<input type="hidden" id="GMap_BOX_Lat" name="GMap_BOX_Lat" value="<?php echo $GMap_Box_lat; ?>" />
+	<input type="hidden" id="GMap_BOX_Lng" name="GMap_BOX_Lng" value="<?php echo $GMap_Box_lng; ?>" />
+</div>
